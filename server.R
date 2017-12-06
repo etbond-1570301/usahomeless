@@ -8,6 +8,8 @@ library(ggplot2)
 
 #Read in data.
 homeless.df <- read.csv('./data/homeless.csv')
+raw.state.data <- read.csv('./data/HomelessPopulationState.csv', header = TRUE, stringsAsFactors = FALSE)
+
 
 ##WA Dataframes.
 #Filter data for Washington only.
@@ -32,6 +34,25 @@ shinyServer(function(input, output) {
   
   
 ##USA Homelessness. 
+  output$plot <- renderPlotly({
+    
+    raw.state.data$hover <- with(raw.state.data, paste(State, '<br>', "Total Homeless", TotalHomeless2007, "Sheltered Homeless", ShelteredHomeless2007, "<br>",
+                                                       "Unsheltered Homeless", UnshelteredHomeless2007))
+    
+    g <- list(
+      scope = 'usa',
+      projection = list(type = 'albers usa'),
+      lakecolor = toRGB('white')
+    )
+    plot_ly(raw.state.data, z = ~TotalHomeless2007, text = ~raw.state.data$hover, locations = ~State,
+            type = 'choropleth', locationmode = 'USA-states') %>%
+      layout(geo = g)
+  })
+  
+  output$click <- renderPrint({
+    d <- event_data("plotly_click")
+    if (is.null(d)) "Hover over a state to view homeless population data" else d
+  })
   
   
 ##Washington.
