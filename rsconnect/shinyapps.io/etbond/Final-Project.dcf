@@ -1,0 +1,12 @@
+name: Final-Project
+title: Final-Project
+username:
+account: etbond
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 244810
+bundleId: 1118213
+url: https://etbond.shinyapps.io/Final-Project/
+when: 1512539437.6499
+asMultiple: FALSE
+asStatic: FALSE
