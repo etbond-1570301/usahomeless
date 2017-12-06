@@ -26,7 +26,12 @@ shinyUI(navbarPage(fluidPage("United States Homelessness"), theme="bootstrap.css
       tags$img(src = "https://homelessnessimages.files.wordpress.com/2017/12/img5.png", width = "700px", height = "400px")
     )
   ),
-                             tabPanel("USA"),
+                             tabPanel("USA",
+                                #State population map
+                                  mainPanel(
+                                  plotlyOutput("plot"),
+                                  verbatimTextOutput("click")    
+                             )),
                              tabPanel("Close to Home",
                                       titlePanel("Homelessness In Washington State"),
                                       sidebarLayout(
@@ -86,7 +91,8 @@ shinyUI(navbarPage(fluidPage("United States Homelessness"), theme="bootstrap.css
                                                   
                                                      )
                                                    )
-                                        )
-                                                 
+  
+                                                     )
+                                              
                                                  )
                                       
