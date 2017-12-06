@@ -31,22 +31,31 @@ shinyServer(function(input, output) {
 
 
 ##Overview.
-  
+
   
 ##USA Homelessness. 
   output$plot <- renderPlotly({
     #removed total row affected the map
     state.data <- raw.state.data[-55,]
+    #actively filters the data according to user input (by year and only shows states with total homeless populations <= user input)
+    state.data <- state.data %>%
+                  select(State, contains(toString(input$datayear))) %>%
+                  filter(state.data$TotalHomeless2016 <= input$homelesspopulation)
+                  
+    #stores total population, sheltered homeless, and unsheltered homeless as arrays.
+    Population <- state.data[ , 2]
+    Sheltered <- state.data[, 3]
+    Unsheltered <- state.data[ , 4]
     
-    state.data$hover <- with(state.data, paste(State, '<br>', "Total Homeless", TotalHomeless2007, "Sheltered Homeless", ShelteredHomeless2007, "<br>",
-                                                       "Unsheltered Homeless", UnshelteredHomeless2007))
+    state.data$hover <- with(state.data, paste(State, '<br>', "Total Homeless", Population, "Sheltered Homeless", Sheltered, "<br>",
+                                                       "Unsheltered Homeless", Unsheltered))
     
     g <- list(
       scope = 'usa',
       projection = list(type = 'albers usa'),
       lakecolor = toRGB('white')
     )
-    plot_ly(state.data, z = ~TotalHomeless2007, text = ~state.data$hover, locations = ~State,
+    plot_ly(state.data, z = ~Population, text = ~state.data$hover, locations = ~State,
             type = 'choropleth', locationmode = 'USA-states') %>%
       layout(geo = g)
   })

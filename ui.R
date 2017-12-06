@@ -28,6 +28,26 @@ shinyUI(navbarPage(fluidPage("United States Homelessness"), theme="bootstrap.css
   ),
                              tabPanel("USA",
                                 #State population map
+                                sidebarPanel(
+                                  sliderInput('homelesspopulation',              # key this value will be assigned to
+                                              "States with AT LEAST:",  # label
+                                              min = min(state.data$TotalHomeless2016),           # minimum slider value
+                                              max = max(state.data$TotalHomeless2016),           # maximum slider value
+                                              value = 1000          # starting value
+                                  ),
+                                  ### allows the user to select a specific year and only see homeless data for that year.
+                                  radioButtons("datayear", "Year:",
+                                               c("2007" = "2007",
+                                                 "2008" = "2008",
+                                                 "2009" = "2009",
+                                                 "2010" = "2010",
+                                                 "2011" = "2011",
+                                                 "2012" = "2012",
+                                                 "2013" = "2013",
+                                                 "2014" = "2014",
+                                                 "2015" = "2015",
+                                                 "2016" = "2016"))
+                                ),
                                   mainPanel(
                                   plotlyOutput("plot"),
                                   verbatimTextOutput("click")    
