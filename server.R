@@ -35,8 +35,10 @@ shinyServer(function(input, output) {
   
 ##USA Homelessness. 
   output$plot <- renderPlotly({
+    #removed total row affected the map
+    state.data <- raw.state.data[-55,]
     
-    raw.state.data$hover <- with(raw.state.data, paste(State, '<br>', "Total Homeless", TotalHomeless2007, "Sheltered Homeless", ShelteredHomeless2007, "<br>",
+    state.data$hover <- with(state.data, paste(State, '<br>', "Total Homeless", TotalHomeless2007, "Sheltered Homeless", ShelteredHomeless2007, "<br>",
                                                        "Unsheltered Homeless", UnshelteredHomeless2007))
     
     g <- list(
@@ -44,7 +46,7 @@ shinyServer(function(input, output) {
       projection = list(type = 'albers usa'),
       lakecolor = toRGB('white')
     )
-    plot_ly(raw.state.data, z = ~TotalHomeless2007, text = ~raw.state.data$hover, locations = ~State,
+    plot_ly(state.data, z = ~TotalHomeless2007, text = ~state.data$hover, locations = ~State,
             type = 'choropleth', locationmode = 'USA-states') %>%
       layout(geo = g)
   })
