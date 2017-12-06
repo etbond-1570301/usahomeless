@@ -9,6 +9,8 @@ library(ggplot2)
 #Read in data.
 homeless.df <- read.csv('./data/homeless.csv')
 raw.state.data <- read.csv('./data/HomelessPopulationState.csv', header = TRUE, stringsAsFactors = FALSE)
+#removed row 55, the total row affected the map population ranges
+state.data <- raw.state.data[-55,]
 
 
 ##WA Dataframes.
@@ -34,9 +36,9 @@ shinyServer(function(input, output) {
 
   
 ##USA Homelessness. 
+  
   output$plot <- renderPlotly({
-    #removed total row affected the map
-    state.data <- raw.state.data[-55,]
+
     #actively filters the data according to user input (by year and only shows states with total homeless populations <= user input)
     state.data <- state.data %>%
                   select(State, contains(toString(input$datayear))) %>%
