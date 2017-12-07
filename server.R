@@ -3,6 +3,7 @@ library(dplyr)
 library(ggplot2)
 library(ggmap)
 library(shinythemes)
+library(ggiraph)
 
 
 #Set working directory:
@@ -129,24 +130,29 @@ shinyServer(function(input, output) {
     
     #Using the defined values, construct a WA barplot using ggplot2
     ggplot(plot.data, aes(x = Year, y = Count2, fill = CoC.Name)) +
-      geom_bar(stat = "identity",
-               aes(color = CoC.Name),
-               position = position_dodge()) +
+    geom_bar(stat = "identity",
+             aes(color = CoC.Name),
+             position = position_dodge()) +
+  
       theme(axis.text.x = element_text(
         size  = 10,
         angle = 45,
         hjust = 1,
         vjust = 1
       )) +
-      theme(axis.text.y = element_text(
-        size = 10,
-        hjust = 1,
-        vjust = 1
+     theme(axis.text.y = element_text(
+       size = 10,
+       hjust = 1,
+       vjust = 1
       )) +
       labs(title = "Annual Homeless Population By Washington County", x = "Year of Data Collection", y = "Homeless Individuals")
-  })
+    
+      })
   
-  output$seaPlot <- renderPlot({
+  
+  
+  ##Seattle.
+  output$seaPlot <- renderPlotly({
     if (input$Year == "2007") {
       plot.data = sea.plot.data %>% filter(Year == "1/1/2007")
     } else if (input$Year == "2008") {
@@ -171,34 +177,26 @@ shinyServer(function(input, output) {
       plot.data = sea.plot.data
     }
     
-    
-    ggplot(data = sea.plot.data, aes(Year, factor(Count2), fill = Measures)) +
-      geom_bar(stat = "identity",
-               aes(color = Measures),
-               position = position_dodge()) +
-      theme_minimal() +
-      theme(axis.text.x = element_text(
-        size  = 10,
-        angle = 45,
-        hjust = 1,
-        vjust = 1
-      )) +
-      theme(axis.text.y = element_text(
-        size = 7,
-        hjust = 1,
-        vjust = 1
-      )) +
-      labs(title = "Annual Homeless Breakdown (King County)", x = "Year of Data Collection", y = "Sheltered/Unsheltered Homeless Individuals")
-    
+    plot_ly(plot.data, x = ~Year, y = ~Count2, 
+      # Hover text:
+      text = ~paste("(Year of Collection, Population Count)"),
+      color = ~Measures, size = ~Count2
+    ) %>%
+      layout(
+        title = 'Annual Homeless Breakdown (King County)',
+        xaxis = list(
+          type = 'category',
+          title = ''
+        ),
+        yaxis = list(
+          title = 'Sheltered/Unsheltered Homeless Individuals')
+      )
     
   })
+
   
-#-----------------------------------------------------------------------
-  #---------------------------------------------------------------------
-  #Food Bank
-  #---------------------------------------------------------------------
-#-----------------------------------------------------------------------
-  
+  ##Food Bank
+
   ranges <- reactiveValues(x = NULL, y = NULL)
   
   # When a double-click happens, check if there's a brush on the plot.

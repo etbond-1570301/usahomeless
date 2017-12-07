@@ -71,6 +71,7 @@ shinyUI(
     tabPanel(
       "USA",
       titlePanel("Homelessness In United States"),
+      br(), br(),
       sidebarPanel(
         "The slider below allows the user to view states with homeless populations at or below the slider value.",
         br(),
@@ -119,6 +120,7 @@ shinyUI(
     tabPanel(
       "Close to Home",
       titlePanel("Homelessness In Washington State"),
+      br(), br(),
       sidebarLayout(
         sidebarPanel(
           "The graph to the right depicts the total number of homeless individuals per county (CoC) within Washington State.",
@@ -156,7 +158,7 @@ shinyUI(
           ),
           br(),
           br(),
-          plotOutput('seaPlot'),
+          plotlyOutput('seaPlot'),
           br(),
           br(),
           p(
