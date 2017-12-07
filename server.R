@@ -191,22 +191,6 @@ shinyServer(function(input, output) {
 
   
   ##Food Bank
-
-  ranges <- reactiveValues(x = NULL, y = NULL)
-  
-  # When a double-click happens, check if there's a brush on the plot.
-  # If so, zoom to the brush bounds; if not, reset the zoom.
-  observeEvent(input$plot_doubleClick, {
-    brush <- input$plot_brush
-    if (!is.null(brush)) {
-      ranges$x <- c(brush$xmin, brush$xmax)
-      ranges$y <- c(brush$ymin, brush$ymax)
-      
-    } else {
-      ranges$x <- NULL
-      ranges$y <- NULL
-    }
-  })
   
   #Food Bank Plot
   output$foodBankPlot <- renderPlot({
@@ -215,8 +199,7 @@ shinyServer(function(input, output) {
       zoom = 11,
       source = "stamen",
       maptype = "toner",
-      darken = c(.3, "#BBBBBB"),
-      scale = 20000
+      darken = c(.3, "#BBBBBB")
     )
     
     map.seattle_city +
@@ -227,7 +210,6 @@ shinyServer(function(input, output) {
         alpha = 0.7,
         size = 6.0
       ) + 
-      coord_cartesian(xlim = ranges$x, ylim = ranges$y, expand = TRUE) +
       ggtitle("Food Banks in Seattle") +
       theme(plot.title = element_text(size = 24))
     

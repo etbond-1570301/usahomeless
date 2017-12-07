@@ -177,9 +177,7 @@ shinyUI(
           plotOutput(
             "foodBankPlot",
             hover = hoverOpts(id = "plot_hover"),
-            click = clickOpts(id = "plot_click"),
-            brush = brushOpts(id = "plot_brush", resetOnNew = TRUE),
-            dblclick = "plot_doubleClick"
+            click = clickOpts(id = "plot_click")
           ),
           fluidRow(
             column(width = 1),
