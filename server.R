@@ -26,6 +26,9 @@ sea.plot.data <- filter(homeless.df, State == "WA", CoC.Name == "Seattle/King Co
 #Remove commas for plotting.
 sea.plot.data$Count2 = as.numeric(gsub("\\,", "", sea.plot.data$Count))
 
+#Food Bank
+food <- read.csv("data/Food_Banks.csv", stringsAsFactors = FALSE)
+
 #######################################################################
 
 ##Server
