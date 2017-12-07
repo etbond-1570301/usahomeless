@@ -2,6 +2,7 @@ library(shiny)
 library(dplyr)
 library(ggplot2)
 library(plotly)
+library(ggmap)
 
 raw.state.data <- read.csv('./data/HomelessPopulationState.csv', header = TRUE, stringsAsFactors = FALSE)
 
@@ -30,9 +31,8 @@ shinyUI(navbarPage(fluidPage("United States Homelessness"), theme="bootstrap.css
                             ),
                    tabPanel("Food Banks in Seattle",
                               mainPanel(
-                                plotOutput("foodBankPlot", click = "plot_click",
+                                plotOutput("foodBankPlot",
                                            hover = hoverOpts(id = "plot_hover")),
-                                verbatimTextOutput("info"),
                                 verbatimTextOutput("hover_info")
                               )
                             ),
