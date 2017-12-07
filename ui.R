@@ -112,8 +112,7 @@ shinyUI(
           "This map depicts the specific state's homeless populations based on the year of input. Hovering over a state will provide
           the user with state-specific homeless data regarding total number of homeless individuals, and a breakdown of those individuals in and out of homeless shelters."
         ),
-        plotlyOutput("plot"),
-        verbatimTextOutput("click")
+        plotlyOutput("plot")
         )
     ),
     
