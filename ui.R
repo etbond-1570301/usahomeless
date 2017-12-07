@@ -3,6 +3,9 @@ library(dplyr)
 library(ggplot2)
 library(plotly)
 
+raw.state.data <- read.csv('./data/HomelessPopulationState.csv', header = TRUE, stringsAsFactors = FALSE)
+#removed row 55, the total row affected the map population ranges
+state.data <- raw.state.data[-55,]
 shinyUI(navbarPage(fluidPage("United States Homelessness"), theme="bootstrap.css",
                              tabPanel("Overview",
                                       titlePanel('Project Overview'),
@@ -30,7 +33,7 @@ shinyUI(navbarPage(fluidPage("United States Homelessness"), theme="bootstrap.css
                                 #State population map
                                 sidebarPanel(
                                   sliderInput('homelesspopulation',              # key this value will be assigned to
-                                              "States with AT LEAST:",  # label
+                                              "States with AT MOST:",  # label
                                               min = min(state.data$TotalHomeless2016),           # minimum slider value
                                               max = max(state.data$TotalHomeless2016),           # maximum slider value
                                               value = 1000          # starting value
