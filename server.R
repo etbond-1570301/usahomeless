@@ -139,5 +139,30 @@ output$seaPlot <- renderPlot({
   
   
 })
+  
+  #Food Bank Plot
+  output$foodBankPlot <- renderPlot({
+    
+    map.seattle_city <- qmap("seattle", zoom = 11, source="stamen", maptype="toner",darken = c(.3,"#BBBBBB"))
+    map.seattle_city
+    
+    map.seattle_city +
+      geom_point(data=food, aes(x=Longitude, y=Latitude), color = "orange", alpha = 0.7, size = 6.0)
+    
+  })
+  
+  #Food Bank Plot Hover Hack
+  output$hover_info <- renderText({
+    
+    if(!is.null(input$plot_hover)){
+      hover = input$plot_hover
+      dist = dist=sqrt((hover$x-food$Longitude)^2+(hover$y-food$Latitude)^2)
+      if(min(dist) < 3) {
+        paste0("Food Bank: ", food$Common.Name[which.min(dist)], "\n",
+               "Address: ", food$Address[which.min(dist)], "\n",
+               "Website: ", food$Website[which.min(dist)])
+      }
+    }
+  })
 
 })
