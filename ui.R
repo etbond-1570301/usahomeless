@@ -36,10 +36,7 @@ shinyUI(navbarPage(fluidPage("United States Homelessness"), theme = shinythemes:
                             ),
                    tabPanel("USA",
                             titlePanel("Homelessness In United States"),
-                            sidebarPanel("This map depicts the specific state's homeless populations based on the year of input. Hovering over a state will provide
-                                         the user with state-specific homeless data regarding total number of homeless individuals, and a breakdown of those individuals in and out of homeless shelters.",
-                                         br(), br(),
-                                         "The slider below allows the user to view states with homeless populations at or below the slider value.",
+                            sidebarPanel("The slider below allows the user to view states with homeless populations at or below the slider value.",
                                          br(), br(),
                                          sliderInput('homelesspopulation', 
                                                      "Homeless Population:",  # label
@@ -63,6 +60,8 @@ shinyUI(navbarPage(fluidPage("United States Homelessness"), theme = shinythemes:
                                                         "2016" = "2016"))
                             ),
                             mainPanel(
+                              p("This map depicts the specific state's homeless populations based on the year of input. Hovering over a state will provide
+                                         the user with state-specific homeless data regarding total number of homeless individuals, and a breakdown of those individuals in and out of homeless shelters."),
                               plotlyOutput("plot"),
                               verbatimTextOutput("click")    
                             )),
@@ -70,29 +69,36 @@ shinyUI(navbarPage(fluidPage("United States Homelessness"), theme = shinythemes:
                    tabPanel("Close to Home",
                             titlePanel("Homelessness In Washington State"),
                             sidebarLayout(
-                              sidebarPanel("The top graph depicts the total number of homeless individuals per county (CoC) within Washington State.",
+                              sidebarPanel("The graph to the right depicts the total number of homeless individuals per county (CoC) within Washington State.",
                                            br(), br(), "This graph can be adjusted by year using the drop-down list below:",
                                            br(), br(),
                                            selectInput(inputId = "Year",
                                                        label = "Year:",
                                                        choices = c("2007", "2008", "2009","2010", "2011", "2012", "2013", "2015", "2016", "All"),
-                                                       selected = "All"),
-                                           br(),
-                                           "As you can see, the majority of Washington's homeless population can be attributed to the Seattle/King County region.
-                                           The second graph displays an annual breakdown of the number of sheltered and non-sheltered homeless individuals within King county."),
+                                                       selected = "All")),
                               
                               mainPanel(
                                 plotOutput('waPlot'), 
                                 br(), br(),
-                                plotOutput('seaPlot')
+                                p("As you can see, the majority of Washington's homeless population can be attributed to the Seattle/King County region.
+                                The graph below displays an annual breakdown of the number of sheltered and non-sheltered homeless individuals within King county."),
+                              br(), br(),
+                                plotOutput('seaPlot'),
+                              br(), br(),
+                              p("As the intensity of homelessness in the United States shows no major decrease, the issue of hunger continues to prevail. 46.5 million Americans — more than the entire populations of New York, Pennsylvania, and Illinois combined — don’t have enough food to eat. 
+                                In the coming years, that number is only going to get bigger, unless people step in to help in a big way. This said, food banks are uniquely qualified to address America’s 
+                                hunger crisis. They’ve long accomplished the boots-on-the-ground work, despite years of crippling cuts to food assistance programs on both a state-by-state and national level. 
+                                Food banks receive federal funding and corporate gifts, but donations from individuals make up the majority of the budget used to feed people at soup kitchens, food pantries, and meal 
+                                programs across the country.",
+                                br(), br(),
+                                "If you are interested in contributing on a local level, the map below provides information on all of the food banks in Seattle. You can hover over a mapped point for the address and website 
+                                of a food bank in the area."),
+                              br(), br(),
+                                plotOutput("foodBankPlot",
+                                           hover = hoverOpts(id = "plot_hover")),
+                                verbatimTextOutput("hover_info")
                               ))),
-                   tabPanel("Food Banks in Seattle",
-                            mainPanel(
-                              plotOutput("foodBankPlot",
-                                         hover = hoverOpts(id = "plot_hover")),
-                              verbatimTextOutput("hover_info")
-                            )
-                   ),
+                  
                    tabPanel("Documentation",
                             mainPanel( 
                               #HTML Formatted Text
@@ -120,7 +126,7 @@ shinyUI(navbarPage(fluidPage("United States Homelessness"), theme = shinythemes:
                                 tags$li("What is the total homeless population by state? (And how does that data breakdown into different groupings into ‘types’ of homelessness (i.e. in shelters, chronically homeless, etc.)?"),
                                 tags$li("What is a particular state’s homeless population by county?"),
                                 tags$li("What does the US homeless population (by state) look like from when the data started being collected (2006) to most recent entries (2016)?"),
-                                tags$li("What does the issue look like in my area (Seattle/WA)?")
+                                tags$li("What does the issue look like in my area (Seattle/WA)? What can I (the user) do to help?")
                               ),
                               br(),
                               h3("What libraries were used?"),
