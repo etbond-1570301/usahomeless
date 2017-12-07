@@ -67,15 +67,14 @@ shinyServer(function(input, output) {
     state.data$hover <-
       with(
         state.data,
-        paste(
-          State,
-          '<br>',
-          "Total Homeless",
+        paste0(
+          "Total Homeless: ",
           Population,
-          "Sheltered Homeless",
+          "<br>",
+          "Sheltered Homeless: ",
           Sheltered,
           "<br>",
-          "Unsheltered Homeless",
+          "Unsheltered Homeless: ",
           Unsheltered
         )
       )
@@ -94,10 +93,6 @@ shinyServer(function(input, output) {
       locationmode = 'USA-states'
     ) %>%
       layout(geo = g)
-  })
-  
-  output$click <- renderPrint({
-    d <- event_data("plotly_click")
   })
   
   
