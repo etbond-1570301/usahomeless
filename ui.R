@@ -86,7 +86,13 @@ shinyUI(navbarPage(fluidPage("United States Homelessness"), theme = shinythemes:
                                 br(), br(),
                                 plotOutput('seaPlot')
                               ))),
-                   
+                   tabPanel("Food Banks in Seattle",
+                            mainPanel(
+                              plotOutput("foodBankPlot",
+                                         hover = hoverOpts(id = "plot_hover")),
+                              verbatimTextOutput("hover_info")
+                            )
+                   ),
                    tabPanel("Documentation",
                             mainPanel( 
                               #HTML Formatted Text
@@ -128,14 +134,7 @@ shinyUI(navbarPage(fluidPage("United States Homelessness"), theme = shinythemes:
                               )
                         
                               )
-                              ),
-                   tabPanel("Food Banks in Seattle",
-                            mainPanel(
-                              plotOutput("foodBankPlot",
-                                         hover = hoverOpts(id = "plot_hover")),
-                              verbatimTextOutput("hover_info")
-                            )
-                   )
+                              )
                    
                    )
         
