@@ -2,6 +2,7 @@ library(shiny)
 library(dplyr)
 library(ggplot2)
 library(ggmap)
+library(shinythemes)
 
 
 #Set working directory:
@@ -68,7 +69,6 @@ shinyServer(function(input, output) {
   
   output$click <- renderPrint({
     d <- event_data("plotly_click")
-    if (is.null(d)) "Hover over a state to view homeless population data" else d
   })
   
   
