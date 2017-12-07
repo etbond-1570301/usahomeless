@@ -148,7 +148,6 @@ output$seaPlot <- renderPlot({
   output$foodBankPlot <- renderPlot({
     
     map.seattle_city <- qmap("seattle", zoom = 11, source="stamen", maptype="toner",darken = c(.3,"#BBBBBB"))
-    map.seattle_city
     
     map.seattle_city +
       geom_point(data=food, aes(x=Longitude, y=Latitude), color = "orange", alpha = 0.7, size = 6.0)

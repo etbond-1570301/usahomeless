@@ -34,13 +34,6 @@ shinyUI(navbarPage(fluidPage("United States Homelessness"), theme = shinythemes:
                               tags$img(src = "https://homelessnessimages.files.wordpress.com/2017/12/img5.png", width = "700px", height = "400px")
                             )
                             ),
-                   tabPanel("Food Banks in Seattle",
-                              mainPanel(
-                                plotOutput("foodBankPlot",
-                                           hover = hoverOpts(id = "plot_hover")),
-                                verbatimTextOutput("hover_info")
-                              )
-                            ),
                    tabPanel("USA",
                             titlePanel("Homelessness In United States"),
                             sidebarPanel("This map depicts the specific state's homeless populations based on the year of input. Hovering over a state will provide
@@ -135,7 +128,14 @@ shinyUI(navbarPage(fluidPage("United States Homelessness"), theme = shinythemes:
                               )
                         
                               )
-                              )
+                              ),
+                   tabPanel("Food Banks in Seattle",
+                            mainPanel(
+                              plotOutput("foodBankPlot",
+                                         hover = hoverOpts(id = "plot_hover")),
+                              verbatimTextOutput("hover_info")
+                            )
+                   )
                    
                    )
         
